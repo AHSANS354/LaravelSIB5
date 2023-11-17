@@ -1,13 +1,44 @@
 @extends('admin.layout.appadmin')
 @section('content')
-
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
                         <h1 class="m-3" align="center">Produk</h1>
                         <div class="card-header py-3">
                             <a href="{{url('admin/produk/create')}}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Tambah</a>
-                            <a href="{{url('admin/produk/produkPDF')}}" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i></a>
+                            <a href="{{url('admin/produk/produkPDF')}}" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i> PDF</a>
+                            <a href="{{url('admin/produk/exportExcel')}}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</a>
+                            <!-- Tombol memicu modal untuk impor -->
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importModal">
+                                <i class="fas fa-file-upload"></i> Upload
+                            </button>
+                        
+                            {{-- Modal untuk impor --}}
+                            <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Impor Data</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Tambahkan formulir impor atau konten Anda di sini -->
+                                            <form method="post" action="{{url('/admin/produk/importExcel')}}" enctype="multipart/form-data">
+                                                @csrf
+                                            <input type="file" name="file">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                            <!-- Tambahkan tombol kirim impor Anda di sini -->
+                                            <button type="submit" class="btn btn-primary">Import</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- End modal untuk impor --}}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

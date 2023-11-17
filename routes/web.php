@@ -66,6 +66,8 @@ Route::prefix('/admin')->group(function(){
     Route::get('/exportPDF', [ProdukController::class,'exportPdf']);
     Route::get('produk/produkPDF', [ProdukController::class,'produkPDF']);
     Route::get('produk/exportdtPDF/{id}', [ProdukController::class,'produkExport']);
+    Route::get('produk/exportExcel', [ProdukController::class,'exportExcel']);
+    Route::post('produk/importExcel', [ProdukController::class,'importExcel']);
 
     //memanggil fungsi satu persatu
     Route::get('/jenis_produk', [JenisProdukController::class, 'index']);

@@ -8,6 +8,9 @@ use App\Models\Jenis_produk;
 use App\Models\Produk;
 use Alert;
 use PDF;
+use App\Exports\produkExport;
+use App\Imports\ProdukImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProdukController extends Controller
 {
@@ -228,4 +231,24 @@ class ProdukController extends Controller
         $pdf = PDF::loadView('admin.produk.produkExport', ['produk'=>$produk]);
         return $pdf->stream();
     }
+
+    public function exportExcel()
+    {
+        return Excel::download(new produkExport, 'produk.xlsx');
+    }
+
+    public function importExcel(Request $request)
+{   
+    // Mengambil file dari request
+    $file = $request->file('file');   
+    // Menghasilkan nama unik untuk file
+    $nama_file = rand() . $file->getClientOriginalName();
+    // Memindahkan file ke direktori public/excel dengan nama unik
+    $file->move(public_path('/excel'), $nama_file);
+    // Mengimpor data dari file Excel menggunakan kelas ProdukImport
+    Excel::import(new ProdukImport, public_path('/excel') . '/' . $nama_file);
+    // Mengarahkan pengguna ke halaman /admin/produk dengan pesan sukses
+    return redirect('/admin/produk')->with('success', 'Berhasil mengimpor data!');
+}
+
 }

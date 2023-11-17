@@ -20,6 +20,8 @@ class Produk extends Model
         'jenis_produk_id'
     ];
 
+    public $timestamps = false;
+
     //relasi one to many 
     public function jenis_produk() {
         return $this->belongsTo(jenis_produk::class);
