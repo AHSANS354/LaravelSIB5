@@ -8,6 +8,8 @@ use App\Http\Controllers\KartuController;
 use App\Http\Controllers\JenisProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,11 @@ use App\Http\Controllers\PelangganController;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [BerandaController::class,'index']);
 
 Route::get('/salam', function(){
     return "Assalamualaikum Selamat Belajar Laravel";
@@ -50,8 +54,9 @@ Route::get('/datamahasiswa', [LihatNilai::class, 'dataMahasiswa']);
 
 Route::get('/notfound', [NotFoundController::class, 'notfound']);
 
-Route::prefix('/admin')->group(function(){
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::middleware(['auth', 'peran:admin-manajer-staff'])->group(function () {
+    Route::prefix('/admin')->group(function(){
+        Route::get('/dashboard', [DashboardController::class, 'index']);
 
     //menggunakan resource memanggil seluruh fungsi yang ada pada controller
     Route::resource('kartu', KartuController::class);
@@ -78,6 +83,12 @@ Route::prefix('/admin')->group(function(){
     Route::post('/jenis_produk/update/{id}', [JenisProdukController::class, 'update']);
     Route::get('/jenis_produk/delete/{id}', [JenisProdukController::class, 'destroy']);
     
-
+    
     Route::resource('/pelanggan', PelangganController::class);
+    
+    Route::get('/user', [UserController::class, 'index']);
 });
+});
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

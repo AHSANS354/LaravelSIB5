@@ -7,9 +7,9 @@
 <h2 align="center">Tambah Data Pelanggan</h2>
 @foreach ($pelanggan as $pl)
     
-@endforeach
-<form method="POST" action="{{url('admin/pelanggan/store')}}" class="m-5">
+<form method="POST" action="{{route('pelanggan.update', $pl->id)}}" class="m-5">
   @csrf
+  @method('PUT')
   <div class="form-group row">
     <label for="kode" class="col-4 col-form-label">Kode</label> 
     <div class="col-8">
@@ -26,9 +26,10 @@
     <label class="col-4">Jenis Kelamin</label> 
     <div class="col-8">
       @foreach ($gender as $g)
+      @php $cek = ($g === $pl->jk) ? 'checked':''; @endphp
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="jk" id="jk_{{$loop->iteration}}" type="radio" class="custom-control-input" value="{{$g}}"> 
-        <label for="jk_{{$loop->iteration}}" class="custom-control-label">{{$g}}</label>
+        <input name="jk" id="" type="radio" class="custom-control-input" value="{{$g}}" {{$cek}}> 
+        <label for="" class="custom-control-label">{{$g}}</label>
       </div>
       @endforeach
     </div>
@@ -36,19 +37,19 @@
   <div class="form-group row">
     <label for="tmp_lahir" class="col-4 col-form-label">Tempat Lahir</label> 
     <div class="col-8">
-      <input id="tmp_lahir" name="tmp_lahir" placeholder="Input Tempat Lahir" type="text" class="form-control">
+      <input id="tmp_lahir" name="tmp_lahir" placeholder="Input Tempat Lahir" type="text" class="form-control" value="{{$pl->tmp_lahir}}">
     </div>
   </div>
   <div class="form-group row">
     <label for="tgl_lahir" class="col-4 col-form-label">Tanggal Lahir</label> 
     <div class="col-2">
-      <input id="tgl_lahir" name="tgl_lahir" type="date" class="form-control">
+      <input id="tgl_lahir" name="tgl_lahir" type="date" class="form-control" value="{{$pl->tgl_lahir}}">
     </div>
   </div>
   <div class="form-group row">
     <label for="email" class="col-4 col-form-label">Email</label> 
     <div class="col-8">
-      <input id="email" name="email" placeholder="Input Email Pelanggan" type="email" class="form-control">
+      <input id="email" name="email" placeholder="Input Email Pelanggan" type="email" class="form-control" value="{{$pl->email}}">
     </div>
   </div>
   <div class="form-group row">
@@ -56,7 +57,8 @@
     <div class="col-2">
       <select id="kartu_id" name="kartu_id" class="custom-select">
         @foreach ($kartu as $k)
-        <option value="{{$k->id}}">{{$k->nama}}</option>
+        @php $sel = ($k->id == $pl->kartu_id) ? 'selected':''; @endphp
+        <option value="{{$k->id}}" {{$sel}}>{{$k->nama}}</option>
         @endforeach 
       </select>
     </div>
@@ -71,4 +73,5 @@
     
   </div>
 </form>
+@endforeach
 @endsection

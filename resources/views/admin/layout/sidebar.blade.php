@@ -66,7 +66,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
+                        @if (Auth::user()->role == 'admin')
                         <a class="collapse-item" href="{{url('admin/produk')}}">Produk</a>
+                        @endif
                         <a class="collapse-item" href="{{route('kartu.index')}}">Kartu</a>
                         <a class="collapse-item" href="{{url('admin/pelanggan')}}">Pelanggan</a>
                         <a class="collapse-item" href="{{url('admin/jenis_produk')}}">Jenis Produk</a>
@@ -111,13 +113,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="{{url('admin/user')}}">User</a>
                     </div>
                 </div>
             </li>
