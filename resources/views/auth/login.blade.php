@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('content')
+@extends('front.app')
+@section('front')
 <div class="container">
 
     <!-- Outer Row -->
